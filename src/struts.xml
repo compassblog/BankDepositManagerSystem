@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="BDMS" namespace="/" extends="struts-default" >
+	
+		<interceptors>
+			<interceptor name="SessionInterceptor" class="com.bank.web.action.interceptor.SessionInterceptor"/>
+		</interceptors>	
+		<global-results>
+			<result name="loginPage">/login.jsp</result>
+			<result name="abilityError">/abilityError.jsp</result>
+			<result name="Error">/Error.jsp</result>
+		</global-results>
+	
+		<action name="login" class="com.bank.web.action.LoginAction" method="login">
+			<result name="loginSuccess">/trade.jsp</result>
+			<result name="loginError">/loginError.jsp</result>
+			<result name="haveWithdraw">/haveWithdraw.jsp</result>
+		</action>
+		<action name="regist" class="com.bank.web.action.UserAction" method="regist">
+			<result name="registSuccess">/registSuccess.jsp</result>
+		</action>
+		<action name="saveMoney" class="com.bank.web.action.TradeAction" method="saveMoney">
+			<result name="saveSuccess" type="chain">selectBalance</result>
+			<interceptor-ref name="defaultStack"/>
+			<interceptor-ref name="SessionInterceptor"/>
+		</action>
+		<action name="selectBalance" class="com.bank.web.action.TradeAction" method="selectBalance">
+			<result name="selectBalance">/tradeSuccess.jsp</result>
+			<result name="selectError">/wrong.jsp</result>
+			<interceptor-ref name="defaultStack"/>
+			<interceptor-ref name="SessionInterceptor"/>
+		</action>
+		<action name="fetchMoney" class="com.bank.web.action.TradeAction" method="fetchMoney">
+			<result name="fetchSuccess" type="chain">selectBalance</result>
+			<result name="fetchError">/fechError.jsp</result>
+			<interceptor-ref name="defaultStack"/>
+			<interceptor-ref name="SessionInterceptor"/>
+		</action>
+		<action name="selectTradeInfo" class="com.bank.web.action.TradeAction" method="tradeInfo">
+			<result name="selectTradeInfo">/tradeInfo.jsp</result>
+			<result name="selectError">/selectError.jsp</result>
+		</action>
+		<action name="selectUser" class="com.bank.web.action.UserAction" method="selectUser">
+			<result name="selectUser">/userInfo.jsp</result>
+			<interceptor-ref name="defaultStack"/>
+			<interceptor-ref name="SessionInterceptor"/>
+		</action>
+		<action name="updateUser" class="com.bank.web.action.UserAction" method="updateUser">
+			<result name="updateSuccess" >/updateUserSuccess.jsp</result>
+			<interceptor-ref name="defaultStack"/>
+			<interceptor-ref name="SessionInterceptor"/>
+		</action>
+		<action name="logout" class="com.bank.web.action.LoginAction" method="logout">
+			<result name="logout">/logout.jsp</result>
+		</action>
+		<action name="deleteUserInfo" class="com.bank.web.action.UserAction" method="deleteUser">
+			<result name="deleteSuccess">/deleteSuccess.jsp</result>
+			<result name="deleteError">/deleteError.jsp</result>
+		</action>
+		<action name="withdrawUserInfo" class="com.bank.web.action.UserAction" method="withdrawUser">
+			<result name="withdrawSuccess">/withdrawSuccess.jsp</result>
+			<result name="withdrawError">/withdrawError.jsp</result>
+		</action>
+		<action name="transferMoney" class="com.bank.web.action.TradeAction" method="transferMoney">
+			<result name="userflagExist">/inputMoney.jsp</result>
+			<interceptor-ref name="defaultStack"/>
+			<interceptor-ref name="SessionInterceptor"/>
+		</action>
+		<action name="confirmTransfer" class="com.bank.web.action.TradeAction" method="confirmTransfer">
+			<result name="transferSuccess">/transferSuccess.jsp</result>
+			<result name="transferError">/transferError.jsp</result>
+		</action>
+	</package>
+</struts>
